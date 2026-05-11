@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Juwa World</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    ✨ Luxury Nail Studio • Beauty Supermarket • Home Service Available
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="logo-section">
+            <img src="logo.jpeg" alt="Logo" class="logo">
+            <div>
+                <h2 class="brand-name">JUWA WORLD</h2>
+                <p style="font-size: 0.8rem; color: #d4af37;">LUXURY BEAUTY</p>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">HOME</a></li>
+            <li><a href="services.html" class="nav-link">SERVICES</a></li>
+            <li><a href="shop.html" class="nav-link">SHOP</a></li>
+            <li><a href="gallery.html" class="nav-link">GALLERY</a></li>
+            <li><a href="contact.html" class="nav-link active">CONTACT</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTACT HERO -->
+<section class="contact-hero">
+    <div class="container">
+        <h1>Get In Touch</h1>
+        <p>We'd love to hear from you. Contact us for appointments, inquiries, or feedback.</p>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="contact-content">
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper">
+                <h2>Send us a Message</h2>
+                <form class="contact-form" id="contactForm" method="POST" action="https://formspree.io/f/mgvewvqk">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="gold-btn" style="width: 100%;">SEND MESSAGE</button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Location</h4>
+                        <p>Nairobi, Kenya<br>Available for home services across the city</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p><span id="contactPhone" data-type="phone" style="cursor: pointer; color: var(--gold); text-decoration: underline;">Click to reveal</span></p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p><span id="contactEmail" data-type="email" style="cursor: pointer; color: var(--gold); text-decoration: underline;">Click to reveal</span></p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class=\"fas fa-lock\"></i>
+                    <div>
+                        <h4>Security</h4>
+                        <p>🔒 Contact information is encrypted for your privacy</p>
+                    </div>
+                </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <div>
+                        <h4>Appointments</h4>
+                        <p>Book online for faster service<br>Walk-ins welcome but appointments preferred</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+    <div class="container">
+        <h2>Our Services</h2>
+        <p>Available at our studio or at your home</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-spa"></i>
+                <h3>Nail Art & Design</h3>
+                <p>Custom nail designs and professional nail care</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-heart"></i>
+                <h3>Spa & Massage</h3>
+                <p>Relaxing spa treatments and massages</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-home"></i>
+                <h3>Home Service</h3>
+                <p>Premium services delivered to your home</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Juwa World</h4>
+                <p>Premium luxury beauty studio and mini supermarket offering professional nail care, spa services, and beauty products.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 JUWA WORLD — Luxury Beauty Studio & Mini Beauty Supermarket</p>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+// Contact form handling
+document.querySelector('.contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you for your message! We will get back to you soon.');
+    this.reset();
+});
+</script>
+
+</body>
+</html>

@@ -1,53 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Checkout</title>
-
-<link rel="stylesheet" href="styles.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Juwa World</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo-section">
+                <img src="logo.jpeg" alt="Juwa World Logo" class="logo">
+                <span class="brand-name">JUWA WORLD</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-<section class="page-hero">
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Checkout</h1>
+            <p>Complete your purchase</p>
+        </div>
+    </section>
 
-<h1>Checkout</h1>
+    <!-- Checkout Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <!-- Checkout Form -->
+                <form class="checkout-form" id="checkoutForm">
+                    <h2>Shipping Information</h2>
+                    
+                    <div class="form-group">
+                        <input type="text" name="firstName" placeholder="First Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="lastName" placeholder="Last Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="address" placeholder="Street Address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="city" placeholder="City" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="postal" placeholder="Postal Code" required>
+                    </div>
 
-<p>
-Complete your beauty shopping experience.
-</p>
+                    <h2 style="margin-top: 30px;">Payment Method</h2>
+                    
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="card" checked>
+                            <span class="payment-label">💳 Debit/Credit Card</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="mpesa">
+                            <span class="payment-label">📱 M-Pesa</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="paypal">
+                            <span class="payment-label">🅿️ PayPal</span>
+                        </label>
+                    </div>
 
-</section>
+                    <!-- CARD PAYMENT SECTION -->
+                    <div id="cardSection" class="payment-section">
+                        <h3 style="margin-top: 20px; color: var(--gold);">Card Details</h3>
+                        
+                        <div class="form-group">
+                            <input type="text" name="cardName" placeholder="Name on Card">
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" name="cardNumber" placeholder="Card Number (16 digits)" maxlength="16" pattern="[0-9]{16}">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 1;">
+                                <input type="text" name="expiry" placeholder="MM/YY" maxlength="5" pattern="[0-9]{2}/[0-9]{2}">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <input type="text" name="cvv" placeholder="CVV (3 digits)" maxlength="3" pattern="[0-9]{3}">
+                            </div>
+                        </div>
+                    </div>
 
-<section class="checkout-container">
+                    <!-- M-PESA PAYMENT SECTION -->
+                    <div id="mpesaSection" class="payment-section" style="display: none;">
+                        <h3 style="margin-top: 20px; color: var(--gold);">M-Pesa Details</h3>
+                        
+                        <div class="form-group">
+                            <input type="tel" name="mpesaPhone" placeholder="M-Pesa Phone Number (e.g., 254792542973)">
+                        </div>
+                        
+                        <div style="background: #f9f7f4; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid var(--gold);">
+                            <p style="margin: 0; font-size: 0.9rem; color: var(--dark);">
+                                <strong>💡 Instructions:</strong><br>
+                                • You will receive an M-Pesa prompt on your phone<br>
+                                • Enter your M-Pesa PIN to complete payment<br>
+                                • Confirmation will be sent to your email
+                            </p>
+                        </div>
+                    </div>
 
-<div class="checkout-form">
+                    <!-- PAYPAL PAYMENT SECTION -->
+                    <div id="paypalSection" class="payment-section" style="display: none;">
+                        <h3 style="margin-top: 20px; color: var(--gold);">PayPal Payment</h3>
+                        
+                        <div class="form-group">
+                            <input type="email" name="paypalEmail" placeholder="PayPal Email Address">
+                        </div>
+                        
+                        <div style="background: #f9f7f4; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid var(--gold);">
+                            <p style="margin: 0; font-size: 0.9rem; color: var(--dark);">
+                                <strong>💡 Instructions:</strong><br>
+                                • Click "Complete Purchase" to proceed<br>
+                                • You will be redirected to PayPal<br>
+                                • Complete payment and return to us
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="cta-button" style="width: 100%; margin-top: 20px;">Complete Purchase</button>
+                </form>
 
-<input type="text"
-placeholder="Full Name">
+                <!-- Order Summary -->
+                <div class="cart-summary">
+                    <div class="cart-title">Order Summary</div>
+                    <div class="cart-items"></div>
+                    
+                    <div class="cart-total">
+                        <span>Subtotal:</span>
+                        <span class="cart-total-amount">$0.00</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                        <span>Shipping:</span>
+                        <span>$10.00</span>
+                    </div>
+                    
+                    <div class="cart-total">
+                        <span><strong>Total:</strong></span>
+                        <span class="cart-total-amount" id="finalTotal"><strong>$0.00</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<input type="email"
-placeholder="Email Address">
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>Juwa World is your premier destination for exceptional services and solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Juwa World. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-<input type="text"
-placeholder="Phone Number">
+    <script src="script.js"></script>
+    <script>
+        // ====================================================
+        // PAYMENT METHOD SELECTION
+        // ====================================================
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+            const cardSection = document.getElementById("cardSection");
+            const mpesaSection = document.getElementById("mpesaSection");
+            const paypalSection = document.getElementById("paypalSection");
+            
+            paymentMethodRadios.forEach(radio => {
+                radio.addEventListener("change", function() {
+                    // Hide all sections
+                    cardSection.style.display = "none";
+                    mpesaSection.style.display = "none";
+                    paypalSection.style.display = "none";
+                    
+                    // Show selected section
+                    if (this.value === "card") {
+                        cardSection.style.display = "block";
+                    } else if (this.value === "mpesa") {
+                        mpesaSection.style.display = "block";
+                    } else if (this.value === "paypal") {
+                        paypalSection.style.display = "block";
+                    }
+                });
+            });
+            
+            // Update cart display on load
+            if (typeof updateCartDisplay === 'function') {
+                updateCartDisplay();
+            }
+        });
+        
+        // ====================================================
+        // REALISTIC CHECKOUT PROCESSING
+        // ====================================================
+        
+        const checkoutForm = document.getElementById("checkoutForm");
+        
+        // Validation Functions
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function validateCardNumber(num) {
+            // Luhn algorithm for card validation
+            let sum = 0;
+            let isEven = false;
+            for (let i = num.length - 1; i >= 0; i--) {
+                let digit = parseInt(num.charAt(i), 10);
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+                sum += digit;
+                isEven = !isEven;
+            }
+            return sum % 10 === 0 && num.length === 16;
+        }
+        
+        function validateExpiry(expiry) {
+            const [month, year] = expiry.split('/');
+            const m = parseInt(month);
+            const y = parseInt(year) + 2000;
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1;
+            
+            if (m < 1 || m > 12) return false;
+            if (y < currentYear) return false;
+            if (y === currentYear && m < currentMonth) return false;
+            return true;
+        }
+        
+        function validateCVV(cvv) {
+            return /^[0-9]{3}$/.test(cvv);
+        }
+        
+        function validateMpesaPhone(phone) {
+            // Remove spaces and check format
+            const cleaned = phone.replace(/\s/g, '');
+            return /^(254|0)?7[0-9]{8}$/.test(cleaned) || cleaned.length >= 10;
+        }
+        
+        if (checkoutForm) {
+            checkoutForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                
+                // Check cart
+                if (!cart || cart.length === 0) {
+                    alert("❌ Your cart is empty. Please add items before checkout.");
+                    return;
+                }
+                
+                // Get form values
+                const firstName = this.querySelector('input[name="firstName"]').value.trim();
+                const lastName = this.querySelector('input[name="lastName"]').value.trim();
+                const email = this.querySelector('input[name="email"]').value.trim();
+                const address = this.querySelector('input[name="address"]').value.trim();
+                const city = this.querySelector('input[name="city"]').value.trim();
+                const postal = this.querySelector('input[name="postal"]').value.trim();
+                const paymentMethod = this.querySelector('input[name="paymentMethod"]:checked').value;
+                
+                // Validation checks for shipping
+                if (!firstName || firstName.length < 2) {
+                    alert("❌ Please enter a valid first name");
+                    return;
+                }
+                
+                if (!lastName || lastName.length < 2) {
+                    alert("❌ Please enter a valid last name");
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    alert("❌ Please enter a valid email address");
+                    return;
+                }
+                
+                if (!address || address.length < 5) {
+                    alert("❌ Please enter a valid street address");
+                    return;
+                }
+                
+                if (!city || city.length < 2) {
+                    alert("❌ Please enter a valid city");
+                    return;
+                }
+                
+                if (!postal || postal.length < 3) {
+                    alert("❌ Please enter a valid postal code");
+                    return;
+                }
+                
+                // Payment method specific validation
+                let paymentDetails = {};
+                
+                if (paymentMethod === "card") {
+                    const cardName = this.querySelector('input[name="cardName"]').value.trim();
+                    const cardNumber = this.querySelector('input[name="cardNumber"]').value.trim();
+                    const expiry = this.querySelector('input[name="expiry"]').value.trim();
+                    const cvv = this.querySelector('input[name="cvv"]').value.trim();
+                    
+                    if (!cardName || cardName.length < 3) {
+                        alert("❌ Please enter the name on the card");
+                        return;
+                    }
+                    
+                    if (!validateCardNumber(cardNumber)) {
+                        alert("❌ Please enter a valid 16-digit card number");
+                        return;
+                    }
+                    
+                    if (!validateExpiry(expiry)) {
+                        alert("❌ Please enter a valid expiry date (MM/YY). Card must not be expired.");
+                        return;
+                    }
+                    
+                    if (!validateCVV(cvv)) {
+                        alert("❌ Please enter a valid 3-digit CVV");
+                        return;
+                    }
+                    
+                    paymentDetails = { cardName, cardNumberLast4: cardNumber.slice(-4) };
+                    
+                } else if (paymentMethod === "mpesa") {
+                    const mpesaPhone = this.querySelector('input[name="mpesaPhone"]').value.trim();
+                    
+                    if (!validateMpesaPhone(mpesaPhone)) {
+                        alert("❌ Please enter a valid M-Pesa phone number (e.g., 254792542973 or 0792542973)");
+                        return;
+                    }
+                    
+                    paymentDetails = { mpesaPhone };
+                    
+                } else if (paymentMethod === "paypal") {
+                    const paypalEmail = this.querySelector('input[name="paypalEmail"]').value.trim();
+                    
+                    if (!validateEmail(paypalEmail)) {
+                        alert("❌ Please enter a valid PayPal email address");
+                        return;
+                    }
+                    
+                    paymentDetails = { paypalEmail };
+                }
+                
+                // Process payment
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                
+                let processingText = "🔄 Processing ";
+                if (paymentMethod === "card") {
+                    processingText += "Card Payment...";
+                } else if (paymentMethod === "mpesa") {
+                    processingText += "M-Pesa Payment...";
+                } else if (paymentMethod === "paypal") {
+                    processingText += "PayPal Payment...";
+                }
+                submitBtn.textContent = processingText;
+                
+                // Simulate payment processing (2-3 seconds)
+                setTimeout(() => {
+                    const subtotal = calculateTotal();
+                    const shipping = 10;
+                    const total = subtotal + shipping;
+                    const orderId = "JW-" + Date.now();
+                    
+                    // Get payment method display name
+                    let paymentMethodName = "";
+                    let paymentIcon = "";
+                    if (paymentMethod === "card") {
+                        paymentMethodName = "Debit/Credit Card";
+                        paymentIcon = "💳";
+                    } else if (paymentMethod === "mpesa") {
+                        paymentMethodName = "M-Pesa";
+                        paymentIcon = "📱";
+                    } else if (paymentMethod === "paypal") {
+                        paymentMethodName = "PayPal";
+                        paymentIcon = "🅿️";
+                    }
+                    
+                    // Create success message
+                    const successMsg = document.createElement("div");
+                    successMsg.style.cssText = `
+                        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                        color: white;
+                        padding: 30px;
+                        border-radius: 12px;
+                        margin-bottom: 20px;
+                        text-align: center;
+                        font-weight: 600;
+                        box-shadow: 0 10px 40px rgba(40, 167, 69, 0.3);
+                        border-left: 5px solid #ffc107;
+                        animation: slideDown 0.5s ease;
+                    `;
+                    successMsg.innerHTML = `
+                        <h3 style="margin: 0 0 15px 0; font-size: 1.5rem;">✓ Order Placed Successfully!</h3>
+                        <p style="margin: 8px 0;">Thank you for your purchase, <strong>${firstName} ${lastName}</strong></p>
+                        <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 15px 0;">
+                        <div style="text-align: left; max-width: 400px; margin: 15px auto; font-size: 0.95rem;">
+                            <p><strong>Order ID:</strong> ${orderId}</p>
+                            <p><strong>Payment Method:</strong> ${paymentIcon} ${paymentMethodName}</p>
+                            <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
+                            <p><strong>Shipping:</strong> ₹${shipping.toFixed(2)}</p>
+                            <p style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; margin-top: 10px;">
+                                <strong style="font-size: 1.1rem;">Order Total: ₹${total.toFixed(2)}</strong>
+                            </p>
+                        </div>
+                        <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 15px 0;">
+                        <p style="margin: 8px 0; font-size: 0.9rem;">📧 Confirmation email sent to: <strong>${email}</strong></p>
+                        <p style="margin: 8px 0; font-size: 0.9rem;">📦 Estimated delivery: 3-5 business days to ${city}</p>
+                    `;
+                    
+                    // Insert success message
+                    this.parentNode.insertBefore(successMsg, this);
+                    
+                    // Scroll to message
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Reset form
+                    checkoutForm.reset();
+                    cardSection.style.display = "block";
+                    mpesaSection.style.display = "none";
+                    paypalSection.style.display = "none";
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    
+                    // Clear cart
+                    cart = [];
+                    localStorage.removeItem("juwaCart");
+                    
+                    // Update cart display
+                    updateCartDisplay();
+                    
+                    // Redirect after 5 seconds
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 5000);
+                    
+                }, 2500);
+            });
+            
+            // Update cart display on load
+            updateCartDisplay();
+        }
+    </script>
+    <style>
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+                updateCartDisplay();
 
-<input type="text"
-placeholder="Delivery Address">
+                // Reset form
+                checkoutForm.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
 
-<select>
-<option>M-PESA</option>
-<option>Card Payment</option>
-<option>Cash On Delivery</option>
-</select>
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: "smooth" });
 
-<button class="gold-btn">
+                // Remove success message after 5 seconds
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 5000);
+            }, 2000);
+        });
+
+        // Update final total with shipping
+        function updateFinalTotal() {
+            const shipping = 10;
+            const subtotal = calculateTotal();
+            const total = subtotal + shipping;
+            document.getElementById("finalTotal").textContent = `$${total.toFixed(2)}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartDisplay();
+            updateFinalTotal();
+        });
+
+        // Override updateCartDisplay to also update final total
+        const originalUpdateCartDisplay = updateCartDisplay;
+        updateCartDisplay = function() {
+            originalUpdateCartDisplay();
+            updateFinalTotal();
+        };
+    </script>
+</body>
+</html>
 PLACE ORDER
 </button>
 
