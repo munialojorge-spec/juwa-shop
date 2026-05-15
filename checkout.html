@@ -110,17 +110,19 @@
 
                     <!-- M-PESA PAYMENT SECTION -->
                     <div id="mpesaSection" class="payment-section" style="display: none;">
-                        <h3 style="margin-top: 20px; color: var(--gold);">M-Pesa Details</h3>
+                        <h3 style="margin-top: 20px; color: var(--gold);">M-Pesa Payment</h3>
                         
                         <div class="form-group">
-                            <input type="tel" name="mpesaPhone" placeholder="M-Pesa Phone Number (e.g., 254792542973)">
+                            <label style="display: block; margin-bottom: 8px; color: var(--dark); font-weight: 600;">M-Pesa Account Number</label>
+                            <input type="tel" name="mpesaPhone" placeholder="Phone Number (e.g., +254799457413)" required>
                         </div>
                         
                         <div style="background: #f9f7f4; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid var(--gold);">
                             <p style="margin: 0; font-size: 0.9rem; color: var(--dark);">
-                                <strong>💡 Instructions:</strong><br>
-                                • You will receive an M-Pesa prompt on your phone<br>
-                                • Enter your M-Pesa PIN to complete payment<br>
+                                <strong>📱 Payment Instructions:</strong><br>
+                                • Account Number: <strong>+254 799 457413</strong><br>
+                                • Use your phone number above as reference<br>
+                                • Complete payment through M-Pesa USSD<br>
                                 • Confirmation will be sent to your email
                             </p>
                         </div>
@@ -243,8 +245,6 @@
         // REALISTIC CHECKOUT PROCESSING
         // ====================================================
         
-        const checkoutForm = document.getElementById("checkoutForm");
-        
         // Validation Functions
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -293,208 +293,249 @@
             return /^(254|0)?7[0-9]{8}$/.test(cleaned) || cleaned.length >= 10;
         }
         
-        if (checkoutForm) {
-            checkoutForm.addEventListener("submit", function (e) {
-                e.preventDefault();
-                
-                // Check cart
-                if (!cart || cart.length === 0) {
-                    alert("❌ Your cart is empty. Please add items before checkout.");
-                    return;
-                }
-                
-                // Get form values
-                const firstName = this.querySelector('input[name="firstName"]').value.trim();
-                const lastName = this.querySelector('input[name="lastName"]').value.trim();
-                const email = this.querySelector('input[name="email"]').value.trim();
-                const address = this.querySelector('input[name="address"]').value.trim();
-                const city = this.querySelector('input[name="city"]').value.trim();
-                const postal = this.querySelector('input[name="postal"]').value.trim();
-                const paymentMethod = this.querySelector('input[name="paymentMethod"]:checked').value;
-                
-                // Validation checks for shipping
-                if (!firstName || firstName.length < 2) {
-                    alert("❌ Please enter a valid first name");
-                    return;
-                }
-                
-                if (!lastName || lastName.length < 2) {
-                    alert("❌ Please enter a valid last name");
-                    return;
-                }
-                
-                if (!validateEmail(email)) {
-                    alert("❌ Please enter a valid email address");
-                    return;
-                }
-                
-                if (!address || address.length < 5) {
-                    alert("❌ Please enter a valid street address");
-                    return;
-                }
-                
-                if (!city || city.length < 2) {
-                    alert("❌ Please enter a valid city");
-                    return;
-                }
-                
-                if (!postal || postal.length < 3) {
-                    alert("❌ Please enter a valid postal code");
-                    return;
-                }
-                
-                // Payment method specific validation
-                let paymentDetails = {};
-                
-                if (paymentMethod === "card") {
-                    const cardName = this.querySelector('input[name="cardName"]').value.trim();
-                    const cardNumber = this.querySelector('input[name="cardNumber"]').value.trim();
-                    const expiry = this.querySelector('input[name="expiry"]').value.trim();
-                    const cvv = this.querySelector('input[name="cvv"]').value.trim();
-                    
-                    if (!cardName || cardName.length < 3) {
-                        alert("❌ Please enter the name on the card");
-                        return;
-                    }
-                    
-                    if (!validateCardNumber(cardNumber)) {
-                        alert("❌ Please enter a valid 16-digit card number");
-                        return;
-                    }
-                    
-                    if (!validateExpiry(expiry)) {
-                        alert("❌ Please enter a valid expiry date (MM/YY). Card must not be expired.");
-                        return;
-                    }
-                    
-                    if (!validateCVV(cvv)) {
-                        alert("❌ Please enter a valid 3-digit CVV");
-                        return;
-                    }
-                    
-                    paymentDetails = { cardName, cardNumberLast4: cardNumber.slice(-4) };
-                    
-                } else if (paymentMethod === "mpesa") {
-                    const mpesaPhone = this.querySelector('input[name="mpesaPhone"]').value.trim();
-                    
-                    if (!validateMpesaPhone(mpesaPhone)) {
-                        alert("❌ Please enter a valid M-Pesa phone number (e.g., 254792542973 or 0792542973)");
-                        return;
-                    }
-                    
-                    paymentDetails = { mpesaPhone };
-                    
-                } else if (paymentMethod === "paypal") {
-                    const paypalEmail = this.querySelector('input[name="paypalEmail"]').value.trim();
-                    
-                    if (!validateEmail(paypalEmail)) {
-                        alert("❌ Please enter a valid PayPal email address");
-                        return;
-                    }
-                    
-                    paymentDetails = { paypalEmail };
-                }
-                
-                // Process payment
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
-                submitBtn.disabled = true;
-                
-                let processingText = "🔄 Processing ";
-                if (paymentMethod === "card") {
-                    processingText += "Card Payment...";
-                } else if (paymentMethod === "mpesa") {
-                    processingText += "M-Pesa Payment...";
-                } else if (paymentMethod === "paypal") {
-                    processingText += "PayPal Payment...";
-                }
-                submitBtn.textContent = processingText;
-                
-                // Simulate payment processing (2-3 seconds)
-                setTimeout(() => {
-                    const subtotal = calculateTotal();
-                    const shipping = 10;
-                    const total = subtotal + shipping;
-                    const orderId = "JW-" + Date.now();
-                    
-                    // Get payment method display name
-                    let paymentMethodName = "";
-                    let paymentIcon = "";
-                    if (paymentMethod === "card") {
-                        paymentMethodName = "Debit/Credit Card";
-                        paymentIcon = "💳";
-                    } else if (paymentMethod === "mpesa") {
-                        paymentMethodName = "M-Pesa";
-                        paymentIcon = "📱";
-                    } else if (paymentMethod === "paypal") {
-                        paymentMethodName = "PayPal";
-                        paymentIcon = "🅿️";
-                    }
-                    
-                    // Create success message
-                    const successMsg = document.createElement("div");
-                    successMsg.style.cssText = `
-                        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-                        color: white;
-                        padding: 30px;
-                        border-radius: 12px;
-                        margin-bottom: 20px;
-                        text-align: center;
-                        font-weight: 600;
-                        box-shadow: 0 10px 40px rgba(40, 167, 69, 0.3);
-                        border-left: 5px solid #ffc107;
-                        animation: slideDown 0.5s ease;
-                    `;
-                    successMsg.innerHTML = `
-                        <h3 style="margin: 0 0 15px 0; font-size: 1.5rem;">✓ Order Placed Successfully!</h3>
-                        <p style="margin: 8px 0;">Thank you for your purchase, <strong>${firstName} ${lastName}</strong></p>
-                        <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 15px 0;">
-                        <div style="text-align: left; max-width: 400px; margin: 15px auto; font-size: 0.95rem;">
-                            <p><strong>Order ID:</strong> ${orderId}</p>
-                            <p><strong>Payment Method:</strong> ${paymentIcon} ${paymentMethodName}</p>
-                            <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
-                            <p><strong>Shipping:</strong> ₹${shipping.toFixed(2)}</p>
-                            <p style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; margin-top: 10px;">
-                                <strong style="font-size: 1.1rem;">Order Total: ₹${total.toFixed(2)}</strong>
-                            </p>
-                        </div>
-                        <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 15px 0;">
-                        <p style="margin: 8px 0; font-size: 0.9rem;">📧 Confirmation email sent to: <strong>${email}</strong></p>
-                        <p style="margin: 8px 0; font-size: 0.9rem;">📦 Estimated delivery: 3-5 business days to ${city}</p>
-                    `;
-                    
-                    // Insert success message
-                    this.parentNode.insertBefore(successMsg, this);
-                    
-                    // Scroll to message
-                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    
-                    // Reset form
-                    checkoutForm.reset();
-                    cardSection.style.display = "block";
-                    mpesaSection.style.display = "none";
-                    paypalSection.style.display = "none";
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
-                    
-                    // Clear cart
-                    cart = [];
-                    localStorage.removeItem("juwaCart");
-                    
-                    // Update cart display
-                    updateCartDisplay();
-                    
-                    // Redirect after 5 seconds
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 5000);
-                    
-                }, 2500);
-            });
+        document.addEventListener("DOMContentLoaded", function() {
+            const checkoutForm = document.getElementById("checkoutForm");
             
-            // Update cart display on load
-            updateCartDisplay();
-        }
+            if (checkoutForm) {
+                checkoutForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    
+                    // Check cart
+                    if (!cart || cart.length === 0) {
+                        alert("❌ Your cart is empty. Please add items before checkout.");
+                        return;
+                    }
+                    
+                    // Get form values
+                    const firstName = this.querySelector('input[name="firstName"]').value.trim();
+                    const lastName = this.querySelector('input[name="lastName"]').value.trim();
+                    const email = this.querySelector('input[name="email"]').value.trim();
+                    const address = this.querySelector('input[name="address"]').value.trim();
+                    const city = this.querySelector('input[name="city"]').value.trim();
+                    const postal = this.querySelector('input[name="postal"]').value.trim();
+                    const paymentMethod = this.querySelector('input[name="paymentMethod"]:checked').value;
+                    
+                    // Validation checks for shipping
+                    if (!firstName || firstName.length < 2) {
+                        alert("❌ Please enter a valid first name");
+                        return;
+                    }
+                    
+                    if (!lastName || lastName.length < 2) {
+                        alert("❌ Please enter a valid last name");
+                        return;
+                    }
+                    
+                    if (!validateEmail(email)) {
+                        alert("❌ Please enter a valid email address");
+                        return;
+                    }
+                    
+                    if (!address || address.length < 5) {
+                        alert("❌ Please enter a valid street address");
+                        return;
+                    }
+                    
+                    if (!city || city.length < 2) {
+                        alert("❌ Please enter a valid city");
+                        return;
+                    }
+                    
+                    if (!postal || postal.length < 3) {
+                        alert("❌ Please enter a valid postal code");
+                        return;
+                    }
+                    
+                    // Payment method specific validation
+                    let paymentDetails = {};
+                    
+                    if (paymentMethod === "card") {
+                        const cardName = this.querySelector('input[name="cardName"]').value.trim();
+                        const cardNumber = this.querySelector('input[name="cardNumber"]').value.trim();
+                        const expiry = this.querySelector('input[name="expiry"]').value.trim();
+                        const cvv = this.querySelector('input[name="cvv"]').value.trim();
+                        
+                        if (!cardName || cardName.length < 3) {
+                            alert("❌ Please enter the name on the card");
+                            return;
+                        }
+                        
+                        if (!validateCardNumber(cardNumber)) {
+                            alert("❌ Please enter a valid 16-digit card number");
+                            return;
+                        }
+                        
+                        if (!validateExpiry(expiry)) {
+                            alert("❌ Please enter a valid expiry date (MM/YY). Card must not be expired.");
+                            return;
+                        }
+                        
+                        if (!validateCVV(cvv)) {
+                            alert("❌ Please enter a valid 3-digit CVV");
+                            return;
+                        }
+                        
+                        paymentDetails = { cardName, cardNumberLast4: cardNumber.slice(-4) };
+                        
+                    } else if (paymentMethod === "mpesa") {
+                        const mpesaPhone = this.querySelector('input[name="mpesaPhone"]').value.trim();
+                        
+                        if (!mpesaPhone) {
+                            alert("❌ Please enter your M-Pesa phone number");
+                            return;
+                        }
+                        
+                        if (!validateMpesaPhone(mpesaPhone)) {
+                            alert("❌ Please enter a valid M-Pesa phone number (e.g., 254792542973 or 0792542973)");
+                            return;
+                        }
+                        
+                        paymentDetails = { mpesaPhone };
+                        
+                    } else if (paymentMethod === "paypal") {
+                        const paypalEmail = this.querySelector('input[name="paypalEmail"]').value.trim();
+                        
+                        if (!paypalEmail) {
+                            alert("❌ Please enter your PayPal email address");
+                            return;
+                        }
+                        
+                        if (!validateEmail(paypalEmail)) {
+                            alert("❌ Please enter a valid PayPal email address");
+                            return;
+                        }
+                        
+                        paymentDetails = { paypalEmail };
+                    }
+                    
+                    // Process payment
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.disabled = true;
+                    
+                    let processingText = "🔄 Processing ";
+                    if (paymentMethod === "card") {
+                        processingText += "Card Payment...";
+                    } else if (paymentMethod === "mpesa") {
+                        processingText += "M-Pesa Payment...";
+                    } else if (paymentMethod === "paypal") {
+                        processingText += "PayPal Payment...";
+                    }
+                    submitBtn.textContent = processingText;
+                    
+                    // Simulate payment processing (2-3 seconds)
+                    setTimeout(() => {
+                        const subtotal = calculateTotal();
+                        const shipping = 10;
+                        const total = subtotal + shipping;
+                        const orderId = "JW-" + Date.now();
+                        
+                        // Get payment method display name
+                        let paymentMethodName = "";
+                        let paymentIcon = "";
+                        if (paymentMethod === "card") {
+                            paymentMethodName = "Debit/Credit Card";
+                            paymentIcon = "💳";
+                        } else if (paymentMethod === "mpesa") {
+                            paymentMethodName = "M-Pesa";
+                            paymentIcon = "📱";
+                        } else if (paymentMethod === "paypal") {
+                            paymentMethodName = "PayPal";
+                            paymentIcon = "🅿️";
+                        }
+                        
+                        // Create success message
+                        const successMsg = document.createElement("div");
+                        successMsg.style.cssText = `
+                            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                            color: white;
+                            padding: 30px;
+                            border-radius: 12px;
+                            margin-bottom: 20px;
+                            text-align: center;
+                            font-weight: 600;
+                            box-shadow: 0 10px 40px rgba(40, 167, 69, 0.3);
+                            border-left: 5px solid #ffc107;
+                            animation: slideDown 0.5s ease;
+                        `;
+                        successMsg.innerHTML = `
+                            <h3 style="margin: 0 0 15px 0; font-size: 1.5rem;">✓ Order Placed Successfully!</h3>
+                            <p style="margin: 8px 0;">Thank you for your purchase, <strong>${firstName} ${lastName}</strong></p>
+                            <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 15px 0;">
+                            <div style="text-align: left; max-width: 400px; margin: 15px auto; font-size: 0.95rem;">
+                                <p><strong>Order ID:</strong> ${orderId}</p>
+                                <p><strong>Payment Method:</strong> ${paymentIcon} ${paymentMethodName}</p>
+                                <p><strong>Subtotal:</strong> Ksh${subtotal.toFixed(2)}</p>
+                                <p><strong>Shipping:</strong> Ksh${shipping.toFixed(2)}</p>
+                                <p style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; margin-top: 10px;">
+                                    <strong style="font-size: 1.1rem;">Order Total: Ksh${total.toFixed(2)}</strong>
+                                </p>
+                            </div>
+                            <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 15px 0;">
+                            <p style="margin: 8px 0; font-size: 0.9rem;">📧 Email: <strong>${email}</strong></p>
+                            <p style="margin: 8px 0; font-size: 0.9rem;">📱 Contact: <strong>+254 799 457413</strong></p>
+                            <p style="margin: 8px 0; font-size: 0.9rem;">📦 Estimated delivery: 3-5 business days to ${city}</p>
+                        `;
+                        
+                        // Insert success message
+                        this.parentNode.insertBefore(successMsg, this);
+                        
+                        // Scroll to message
+                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                        // Reset form and sections
+                        checkoutForm.reset();
+                        const cardSection = document.getElementById("cardSection");
+                        const mpesaSection = document.getElementById("mpesaSection");
+                        const paypalSection = document.getElementById("paypalSection");
+                        cardSection.style.display = "block";
+                        mpesaSection.style.display = "none";
+                        paypalSection.style.display = "none";
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                        
+                        // Clear cart
+                        cart = [];
+                        localStorage.removeItem("juwaCart");
+                        
+                        // Update cart display
+                        if (typeof updateCartDisplay === 'function') {
+                            updateCartDisplay();
+                        }
+                        
+                        // Add WhatsApp button
+                        const whatsappBtn = document.createElement('button');
+                        whatsappBtn.type = 'button';
+                        whatsappBtn.style.cssText = `
+                            background: #25D366;
+                            color: white;
+                            padding: 12px 25px;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            margin-top: 15px;
+                            cursor: pointer;
+                            font-size: 1rem;
+                            transition: all 0.3s ease;
+                        `;
+                        whatsappBtn.textContent = '💬 Message us on WhatsApp';
+                        whatsappBtn.onmouseover = () => whatsappBtn.style.background = '#1fad51';
+                        whatsappBtn.onmouseout = () => whatsappBtn.style.background = '#25D366';
+                        whatsappBtn.onclick = () => {
+                            const message = `Hi! I just placed order ${orderId} for Ksh${total.toFixed(2)}. Confirmation sent to ${email}`;
+                            window.open(`https://wa.me/254799457413?text=${encodeURIComponent(message)}`, '_blank');
+                        };
+                        successMsg.appendChild(whatsappBtn);
+                        
+                        // Redirect after 5 seconds
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 5000);
+                        
+                    }, 2500);
+                });
+            }
+        });
     </script>
     <style>
         @keyframes slideDown {
@@ -557,35 +598,5 @@
             updateFinalTotal();
         };
     </script>
-</body>
-</html>
-PLACE ORDER
-</button>
-
-</div>
-
-<div class="order-summary">
-
-<h2>Order Summary</h2>
-
-<div class="summary-item">
-<span>Nail Polish Set</span>
-<span>Ksh 1,500</span>
-</div>
-
-<div class="summary-item">
-<span>Cuticle Oil</span>
-<span>Ksh 900</span>
-</div>
-
-<div class="summary-total">
-<span>Total</span>
-<span>Ksh 2,400</span>
-</div>
-
-</div>
-
-</section>
-
 </body>
 </html>

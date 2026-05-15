@@ -78,7 +78,7 @@ const SecurityModule = {
 // Store sensitive contact information encrypted
 const ContactData = {
     email: SecurityModule.encryptData('josephwanyama093@gmail.com'),
-    phone: SecurityModule.encryptData('+254792542973'),
+    phone: SecurityModule.encryptData('+254799457413'),
     
     getEmail: function() {
         return SecurityModule.decryptData(this.email);
@@ -208,6 +208,29 @@ if (contactForm) {
             text-align: center;
         `;
         successMsg.textContent = "✓ Message sent successfully! We'll get back to you soon.";
+        
+        // Add WhatsApp button
+        const whatsappBtn = document.createElement('a');
+        whatsappBtn.href = `https://wa.me/254799457413?text=Hi%20Juwa%20World%2C%20${encodeURIComponent(name)}%20here.%20${encodeURIComponent(message.substring(0, 50))}...`;
+        whatsappBtn.target = '_blank';
+        whatsappBtn.style.cssText = `
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        `;
+        whatsappBtn.textContent = '💬 Continue on WhatsApp';
+        whatsappBtn.onmouseover = () => whatsappBtn.style.background = '#1fad51';
+        whatsappBtn.onmouseout = () => whatsappBtn.style.background = '#25D366';
+        
+        successMsg.appendChild(document.createElement('br'));
+        successMsg.appendChild(whatsappBtn);
         
         contactForm.insertBefore(successMsg, contactForm.firstChild);
 
@@ -375,71 +398,7 @@ document.querySelectorAll(".cta-button").forEach(button => {
 // ENCRYPTED CONTACT INFORMATION REVEAL
 // ======================================================
 
-function initializeContactReveal() {
-    // Handle email reveal
-    const emailElements = document.querySelectorAll('[id*="Email"], [id*="email"]');
-    emailElements.forEach(el => {
-        if (el.textContent === 'Click to reveal') {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                const email = ContactData.getEmail();
-                
-                if (this.textContent === 'Click to reveal') {
-                    this.textContent = email;
-                    this.style.textDecoration = 'none';
-                    this.style.pointerEvents = 'auto';
-                    
-                    // Add copy-to-clipboard functionality
-                    this.style.cursor = 'pointer';
-                    this.title = 'Click to copy email';
-                    
-                    this.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        navigator.clipboard.writeText(email).then(() => {
-                            const originalText = this.textContent;
-                            this.textContent = '✓ Copied!';
-                            setTimeout(() => {
-                                this.textContent = originalText;
-                            }, 2000);
-                        });
-                    });
-                }
-            });
-        }
-    });
-
-    // Handle phone reveal
-    const phoneElements = document.querySelectorAll('[id*="Phone"], [id*="phone"]');
-    phoneElements.forEach(el => {
-        if (el.textContent === 'Click to reveal') {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                const phone = ContactData.getPhone();
-                
-                if (this.textContent === 'Click to reveal') {
-                    this.textContent = phone;
-                    this.style.textDecoration = 'none';
-                    this.style.pointerEvents = 'auto';
-                    
-                    // Add copy-to-clipboard functionality
-                    this.style.cursor = 'pointer';
-                    this.title = 'Click to copy phone';
-                    
-                    this.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        navigator.clipboard.writeText(phone).then(() => {
-                            const originalText = this.textContent;
-                            this.textContent = '✓ Copied!';
-                            setTimeout(() => {
-                                this.textContent = originalText;
-                            }, 2000);
-                        });
-                    });
-                }
-            });
-        }
-    });
-}
+// Contact reveal functionality removed - contact info now displays directly
 
 // ======================================================
 // INITIALIZE ON PAGE LOAD
@@ -447,7 +406,6 @@ function initializeContactReveal() {
 
 document.addEventListener("DOMContentLoaded", function () {
     updateCartDisplay();
-    initializeContactReveal();
     
     // Animate elements on scroll
     const observerOptions = {
@@ -488,8 +446,6 @@ document.addEventListener("click", function (e) {
 });
 
 console.log("✓ Juwa World - Website loaded successfully!");
-
-    let total = 0;
 
     orderSummary.innerHTML =
     `<h2>Order Summary</h2>`;
@@ -787,6 +743,244 @@ scrollBtn.addEventListener("click", () => {
         behavior:"smooth"
     });
 
+});
+
+// ======================================================
+// SEARCH AND CART ICON FUNCTIONALITY
+// ======================================================
+
+// Products for search
+const allProducts = [
+    // NAIL CARE
+    { name: 'Manicure', price: 500 },
+    { name: 'Gel', price: 500 },
+    { name: 'Stick On', price: 1000 },
+    { name: 'Tips', price: 1500 },
+    { name: 'Gungel Overlay', price: 2000 },
+    { name: 'Gungel Tips', price: 2500 },
+    { name: 'Sculpting', price: 3000 },
+    { name: 'Acrylic', price: 3000 },
+    { name: 'Acrylic Tips', price: 3500 },
+    { name: 'Acrylic Sculpting', price: 4000 },
+    
+    // FOOT CARE
+    { name: 'Pedicure', price: 1000 },
+    { name: 'Half Pedicure', price: 800 },
+    { name: 'Vip Pedicure', price: 1500 },
+    { name: 'Ingrown Cutting', price: 500 },
+    { name: 'Fungal and Bacteria Treatment', price: 800 },
+    { name: 'Facial', price: 1000 },
+    { name: 'Waxing - Underarm', price: 500 },
+    { name: 'Bikini', price: 1500 },
+    
+    // ADDITIONAL SERVICES
+    { name: 'Glitter / Art Add-on', price: 200 },
+    { name: 'Nail Repair', price: 200 },
+    { name: 'Nail Extension Removal', price: 300 },
+    { name: 'French / Ombre Finish', price: 300 },
+    
+    // MASSAGE THERAPY
+    { name: 'Massage - 60 min', price: 2500 },
+    { name: 'Massage - 1 hr', price: 3500 },
+    { name: 'Foot Massage - 30 min', price: 1000 },
+    { name: 'Swedish Massage', price: 2500 },
+    { name: 'Aromatherapy Massage', price: 2500 },
+    { name: 'Deep Tissue Massage', price: 2500 },
+    
+    // SKIN & BEAUTY
+    { name: 'Facial', price: 1000 },
+    { name: 'Peep Tissue Massage', price: 2500 }
+];
+
+// Wrap all search/cart functionality in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Get elements
+    const searchIcon = document.getElementById('searchIcon');
+    const searchModal = document.getElementById('searchModal');
+    const closeSearch = document.getElementById('closeSearch');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    
+    // Search Icon Click - OPEN modal
+    if (searchIcon) {
+        searchIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            searchModal.style.display = 'flex';
+            setTimeout(() => searchInput.focus(), 100);
+        });
+    }
+    
+    // Close Button Click
+    if (closeSearch) {
+        closeSearch.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            searchModal.style.display = 'none';
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+        });
+    }
+    
+    // Click outside modal to close
+    if (searchModal) {
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                searchModal.style.display = 'none';
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+            }
+        });
+    }
+    
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchModal && searchModal.style.display === 'flex') {
+            searchModal.style.display = 'none';
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+        }
+    });
+    
+    // Search Input
+    if (searchInput) {
+        searchInput.addEventListener('keyup', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (query === '') {
+                searchResults.innerHTML = '';
+                return;
+            }
+            
+            const results = allProducts.filter(product => 
+                product.name.toLowerCase().includes(query)
+            );
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">No products found</div>';
+                return;
+            }
+            
+            searchResults.innerHTML = results.map(product => `
+                <div class="search-result-item" onclick="addToCart('${product.name}', ${product.price}); document.getElementById('searchModal').style.display='none';">
+                    <div class="search-result-name">${product.name}</div>
+                    <div class="search-result-price">Ksh ${product.price}</div>
+                </div>
+            `).join('');
+        });
+    }
+    
+    // Cart Icon Functionality
+    const cartIcon = document.getElementById('cartIcon');
+    const cartModal = document.getElementById('cartModal');
+    const closeCart = document.getElementById('closeCart');
+    const cartCount = document.getElementById('cartCount');
+
+    if (cartIcon) {
+        cartIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            cartModal.style.display = 'flex';
+            cartModal.classList.add('active');
+            updateCartModal();
+        });
+    }
+
+    if (closeCart) {
+        closeCart.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+            cartModal.classList.remove('active');
+        });
+    }
+
+    if (cartModal) {
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+                cartModal.classList.remove('active');
+            }
+        });
+    }
+
+}); // END DOMContentLoaded
+
+// Update Cart Modal Display
+function updateCartModal() {
+    const cartModalItems = document.getElementById('cartModalItems');
+    const cartModalTotal = document.getElementById('cartModalTotal');
+    
+    if (cart.length === 0) {
+        cartModalItems.innerHTML = '<div class="cart-empty">🛒 Your cart is empty</div>';
+        cartModalTotal.textContent = 'Ksh 0';
+        return;
+    }
+    
+    let total = 0;
+    cartModalItems.innerHTML = cart.map((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        return `
+            <div class="cart-modal-item">
+                <div class="cart-modal-item-info">
+                    <div class="cart-modal-item-name">${item.name}</div>
+                    <div class="cart-modal-item-price">Ksh ${item.price}</div>
+                </div>
+                <div class="cart-modal-item-quantity">
+                    <button class="quantity-btn" onclick="updateQuantity('${item.name}', ${item.quantity - 1})">−</button>
+                    <span style="min-width: 20px; text-align: center;">${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity('${item.name}', ${item.quantity + 1})">+</button>
+                    <button class="remove-item-btn" onclick="removeFromCart('${item.name}')">🗑️</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    cartModalTotal.textContent = 'Ksh ' + total;
+}
+
+// Update cart count badge
+function updateCartCount() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (count > 0) {
+        cartCount.style.display = 'flex';
+        cartCount.textContent = count;
+    } else {
+        cartCount.style.display = 'none';
+    }
+}
+
+// Override addToCart to update cart UI
+const originalAddToCart = addToCart;
+window.addToCart = function(productName, productPrice) {
+    originalAddToCart(productName, productPrice);
+    updateCartCount();
+    if (cartModal && cartModal.style.display === 'flex') {
+        updateCartModal();
+    }
+};
+
+// Override updateQuantity to refresh modal
+const originalUpdateQuantity = updateQuantity;
+window.updateQuantity = function(productName, newQuantity) {
+    if (newQuantity < 1) {
+        removeFromCart(productName);
+        return;
+    }
+    originalUpdateQuantity(productName, newQuantity);
+    updateCartCount();
+    updateCartModal();
+};
+
+// Override removeFromCart to refresh modal
+const originalRemoveFromCart = removeFromCart;
+window.removeFromCart = function(productName) {
+    originalRemoveFromCart(productName);
+    updateCartCount();
+    updateCartModal();
+};
+
+// Initialize cart count on page load
+window.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
 });
 
 // ======================================================

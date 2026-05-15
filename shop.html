@@ -21,6 +21,15 @@
                 <li><a href="shop.html" class="nav-link active">Shop</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
             </ul>
+
+            <div class="nav-icons">
+                <i class="fas fa-search" id="searchIcon" style="cursor: pointer;"></i>
+                <div style="position:relative;">
+                    <i class="fas fa-shopping-bag" id="cartIcon" style="cursor: pointer;"></i>
+                    <span id="cartCount" style="position: absolute; top: -8px; right: -8px; background: var(--gold); color: var(--dark); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; display: none;">0</span>
+                </div>
+            </div>
+
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -28,6 +37,34 @@
             </div>
         </div>
     </nav>
+
+    <!-- Cart Modal Popup -->
+    <div id="cartModal" class="cart-modal" style="display: none;">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h3>🛍️ Shopping Cart</h3>
+                <button class="close-cart" id="closeCart" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gold);">&times;</button>
+            </div>
+            <div id="cartModalItems" class="cart-modal-items"></div>
+            <div class="cart-modal-footer">
+                <div class="cart-modal-total">
+                    <strong>Total:</strong> <span id="cartModalTotal">Ksh 0</span>
+                </div>
+                <a href="checkout.html" class="checkout-btn" style="text-decoration: none; display: block; text-align: center;">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal Popup -->
+    <div id="searchModal" class="search-modal" style="display: none;">
+        <div class="search-modal-content">
+            <div class="search-modal-header" style="display: flex; align-items: center; gap: 10px; padding: 20px; border-bottom: 2px solid var(--gold);">
+                <input type="text" id="searchInput" placeholder="Search products..." style="flex: 1; padding: 12px; border: 2px solid var(--gold); border-radius: 8px; font-size: 16px;">
+                <button class="close-search" id="closeSearch" style="background: none; border: none; font-size: 28px; cursor: pointer; color: var(--gold); padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">&times;</button>
+            </div>
+            <div id="searchResults" class="search-results" style="padding: 20px;"></div>
+        </div>
+    </div>
 
     <!-- Page Hero -->
     <section class="page-hero">
@@ -41,34 +78,63 @@
     <section class="shop">
         <div class="container">
             <h2 class="section-title">Shop Our Collection</h2>
-            <p class="section-subtitle">Handpicked premium products for you</p>
+            <p class="section-subtitle">Premium nail care and beauty services</p>
             
+            <!-- Category 1: NAIL CARE -->
+            <h3 style="color: var(--gold); font-size: 1.5rem; margin-top: 40px; margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 2px;">💅 Nail Care</h3>
             <div class="products-grid">
-                <!-- Product 1 -->
                 <div class="product-card">
-                    <img class="product-image" src="nail.jpeg" alt="Gel Nails">
+                    <img class="product-image" src="nail.jpeg" alt="Manicure">
                     <div class="product-info">
-                        <h3 class="product-name">Gel Nails</h3>
+                        <h3 class="product-name">Manicure</h3>
                         <div class="product-price">Ksh 500</div>
-                        <p class="product-desc">Professional gel nail treatment</p>
+                        <p class="product-desc">Professional manicure service</p>
                         <button class="add-to-cart gold-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
                 <div class="product-card">
-                    <img class="product-image" src="nail2.jpeg" alt="Acrylic Nails">
+                    <img class="product-image" src="nail2.jpeg" alt="Gel">
                     <div class="product-info">
-                        <h3 class="product-name">Acrylic Nails</h3>
-                        <div class="product-price">Ksh 3,000</div>
-                        <p class="product-desc">Durable acrylic nail application</p>
+                        <h3 class="product-name">Gel</h3>
+                        <div class="product-price">Ksh 500</div>
+                        <p class="product-desc">Professional gel nail application</p>
                         <button class="add-to-cart gold-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 3 -->
                 <div class="product-card">
-                    <img class="product-image" src="nail3.jpeg" alt="Gungel Tips">
+                    <img class="product-image" src="nail3.jpeg" alt="Stick On">
+                    <div class="product-info">
+                        <h3 class="product-name">Stick On</h3>
+                        <div class="product-price">Ksh 1,000</div>
+                        <p class="product-desc">Ready-to-wear stick on nails</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail4.jpeg" alt="Tips">
+                    <div class="product-info">
+                        <h3 class="product-name">Tips</h3>
+                        <div class="product-price">Ksh 1,500</div>
+                        <p class="product-desc">Premium artificial nail tips</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail5.jpeg" alt="Gungel Overlay">
+                    <div class="product-info">
+                        <h3 class="product-name">Gungel Overlay</h3>
+                        <div class="product-price">Ksh 2,000</div>
+                        <p class="product-desc">Protective gel overlay coating</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail6.jpeg" alt="Gungel Tips">
                     <div class="product-info">
                         <h3 class="product-name">Gungel Tips</h3>
                         <div class="product-price">Ksh 2,500</div>
@@ -77,9 +143,38 @@
                     </div>
                 </div>
 
-                <!-- Product 4 -->
                 <div class="product-card">
-                    <img class="product-image" src="nail4.jpeg" alt="Acrylic Sculpting">
+                    <img class="product-image" src="nail7.jpeg" alt="Sculpting">
+                    <div class="product-info">
+                        <h3 class="product-name">Sculpting</h3>
+                        <div class="product-price">Ksh 3,000</div>
+                        <p class="product-desc">Premium nail sculpting design</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail8.jpeg" alt="Acrylic">
+                    <div class="product-info">
+                        <h3 class="product-name">Acrylic</h3>
+                        <div class="product-price">Ksh 3,000</div>
+                        <p class="product-desc">Durable acrylic nail application</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail9.jpeg" alt="Acrylic Tips">
+                    <div class="product-info">
+                        <h3 class="product-name">Acrylic Tips</h3>
+                        <div class="product-price">Ksh 3,500</div>
+                        <p class="product-desc">Premium acrylic nail tips</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail.jpeg" alt="Acrylic Sculpting">
                     <div class="product-info">
                         <h3 class="product-name">Acrylic Sculpting</h3>
                         <div class="product-price">Ksh 4,000</div>
@@ -87,47 +182,219 @@
                         <button class="add-to-cart gold-btn">Add to Cart</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 5 -->
+            <!-- Category 2: FOOT CARE -->
+            <h3 style="color: var(--gold); font-size: 1.5rem; margin-top: 50px; margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 2px;">🦶 Foot Care</h3>
+            <div class="products-grid">
                 <div class="product-card">
-                    <img class="product-image" src="nail5.jpeg" alt="Nail Tips">
+                    <img class="product-image" src="nail2.jpeg" alt="Pedicure">
                     <div class="product-info">
-                        <h3 class="product-name">Nail Tips</h3>
-                        <div class="product-price">Ksh 1,500</div>
-                        <p class="product-desc">Premium artificial nail tips</p>
-                        <button class="add-to-cart gold-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <img class="product-image" src="nail6.jpeg" alt="Manicure">
-                    <div class="product-info">
-                        <h3 class="product-name">Manicure</h3>
-                        <div class="product-price">Ksh 500</div>
-                        <p class="product-desc">Complete manicure service</p>
-                        <button class="add-to-cart gold-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 7 -->
-                <div class="product-card">
-                    <img class="product-image" src="nail7.jpeg" alt="Stick On Nails">
-                    <div class="product-info">
-                        <h3 class="product-name">Stick On Nails</h3>
+                        <h3 class="product-name">Pedicure</h3>
                         <div class="product-price">Ksh 1,000</div>
-                        <p class="product-desc">Ready-to-wear stick on nails</p>
+                        <p class="product-desc">Professional pedicure service</p>
                         <button class="add-to-cart gold-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 8 -->
                 <div class="product-card">
-                    <img class="product-image" src="nail8.jpeg" alt="Gungel Overlay">
+                    <img class="product-image" src="nail3.jpeg" alt="Half Pedicure">
                     <div class="product-info">
-                        <h3 class="product-name">Gungel Overlay</h3>
-                        <div class="product-price">Ksh 2,000</div>
-                        <p class="product-desc">Protective gel overlay coating</p>
+                        <h3 class="product-name">Half Pedicure</h3>
+                        <div class="product-price">Ksh 800</div>
+                        <p class="product-desc">Basic pedicure service</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail4.jpeg" alt="Vip Pedicure">
+                    <div class="product-info">
+                        <h3 class="product-name">Vip Pedicure</h3>
+                        <div class="product-price">Ksh 1,500</div>
+                        <p class="product-desc">Premium VIP pedicure experience</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail5.jpeg" alt="Ingrown Cutting">
+                    <div class="product-info">
+                        <h3 class="product-name">Ingrown Cutting</h3>
+                        <div class="product-price">Ksh 500</div>
+                        <p class="product-desc">Professional ingrown nail treatment</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail6.jpeg" alt="Fungal and Bacteria Treatment">
+                    <div class="product-info">
+                        <h3 class="product-name">Fungal and Bacteria Treatment</h3>
+                        <div class="product-price">Ksh 800</div>
+                        <p class="product-desc">Professional fungal treatment</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail7.jpeg" alt="Facial">
+                    <div class="product-info">
+                        <h3 class="product-name">Facial</h3>
+                        <div class="product-price">Ksh 1,000</div>
+                        <p class="product-desc">Professional facial treatment</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail8.jpeg" alt="Waxing - Underarm">
+                    <div class="product-info">
+                        <h3 class="product-name">Waxing - Underarm</h3>
+                        <div class="product-price">Ksh 500</div>
+                        <p class="product-desc">Professional underarm waxing</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail9.jpeg" alt="Bikini">
+                    <div class="product-info">
+                        <h3 class="product-name">Bikini</h3>
+                        <div class="product-price">Ksh 1,500</div>
+                        <p class="product-desc">Professional bikini waxing</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 3: ADDITIONAL SERVICES -->
+            <h3 style="color: var(--gold); font-size: 1.5rem; margin-top: 50px; margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 2px;">✨ Additional Services</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img class="product-image" src="nail.jpeg" alt="Glitter Art Add-on">
+                    <div class="product-info">
+                        <h3 class="product-name">Glitter / Art Add-on</h3>
+                        <div class="product-price">Ksh 200</div>
+                        <p class="product-desc">Decorative glitter and art designs</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail2.jpeg" alt="Nail Repair">
+                    <div class="product-info">
+                        <h3 class="product-name">Nail Repair</h3>
+                        <div class="product-price">Ksh 200</div>
+                        <p class="product-desc">Professional nail repair service</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail3.jpeg" alt="Nail Extension Removal">
+                    <div class="product-info">
+                        <h3 class="product-name">Nail Extension Removal</h3>
+                        <div class="product-price">Ksh 300</div>
+                        <p class="product-desc">Safe nail extension removal</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail4.jpeg" alt="French / Ombre Finish">
+                    <div class="product-info">
+                        <h3 class="product-name">French / Ombre Finish</h3>
+                        <div class="product-price">Ksh 300</div>
+                        <p class="product-desc">Classic French or ombre nail finish</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 4: MASSAGE THERAPY -->
+            <h3 style="color: var(--gold); font-size: 1.5rem; margin-top: 50px; margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 2px;">💆 Massage Therapy</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img class="product-image" src="nail5.jpeg" alt="Massage 60 min">
+                    <div class="product-info">
+                        <h3 class="product-name">Massage - 60 min</h3>
+                        <div class="product-price">Ksh 2,500</div>
+                        <p class="product-desc">Relaxing full body massage</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail6.jpeg" alt="Massage 1 hr">
+                    <div class="product-info">
+                        <h3 class="product-name">Massage - 1 hr</h3>
+                        <div class="product-price">Ksh 3,500</div>
+                        <p class="product-desc">Extended full body massage</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail7.jpeg" alt="Foot Massage 30 min">
+                    <div class="product-info">
+                        <h3 class="product-name">Foot Massage - 30 min</h3>
+                        <div class="product-price">Ksh 1,000</div>
+                        <p class="product-desc">Therapeutic foot massage</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail8.jpeg" alt="Swedish Massage">
+                    <div class="product-info">
+                        <h3 class="product-name">Swedish Massage</h3>
+                        <div class="product-price">Ksh 2,500</div>
+                        <p class="product-desc">Traditional Swedish massage technique</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail9.jpeg" alt="Aromatherapy Massage">
+                    <div class="product-info">
+                        <h3 class="product-name">Aromatherapy Massage</h3>
+                        <div class="product-price">Ksh 2,500</div>
+                        <p class="product-desc">Massage with essential oils</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail.jpeg" alt="Deep Tissue Massage">
+                    <div class="product-info">
+                        <h3 class="product-name">Deep Tissue Massage</h3>
+                        <div class="product-price">Ksh 2,500</div>
+                        <p class="product-desc">Intensive deep tissue treatment</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 5: SKIN & BEAUTY -->
+            <h3 style="color: var(--gold); font-size: 1.5rem; margin-top: 50px; margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 2px;">✨ Skin & Beauty</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img class="product-image" src="nail2.jpeg" alt="Facial">
+                    <div class="product-info">
+                        <h3 class="product-name">Facial</h3>
+                        <div class="product-price">Ksh 1,000</div>
+                        <p class="product-desc">Professional facial treatment</p>
+                        <button class="add-to-cart gold-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img class="product-image" src="nail3.jpeg" alt="Peep Tissue Massage">
+                    <div class="product-info">
+                        <h3 class="product-name">Peep Tissue Massage</h3>
+                        <div class="product-price">Ksh 2,500</div>
+                        <p class="product-desc">Therapeutic tissue massage treatment</p>
                         <button class="add-to-cart gold-btn">Add to Cart</button>
                     </div>
                 </div>
