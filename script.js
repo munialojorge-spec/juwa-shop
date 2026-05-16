@@ -305,7 +305,7 @@ function updateCartDisplay() {
     if (cartContainer) {
         if (cart.length === 0) {
             cartContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">Your cart is empty</p>';
-            if (cartTotal) cartTotal.textContent = "$0.00";
+            if (cartTotal) cartTotal.innerHTML = '<strong>Ksh 0</strong>';
         } else {
             cartContainer.innerHTML = cart.map(item => `
                 <div class="cart-item">
@@ -318,7 +318,7 @@ function updateCartDisplay() {
                                    style="width: 50px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
                         </div>
                     </div>
-                    <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                    <div class=\"cart-item-price\">Ksh ${(item.price * item.quantity).toFixed(2)}</div>
                     <button onclick="removeFromCart('${item.name}')" 
                             style="background: #d9534f; color: white; padding: 5px 10px; border-radius: 4px; margin-left: 10px;">
                         ✕
@@ -326,7 +326,7 @@ function updateCartDisplay() {
                 </div>
             `).join('');
 
-            if (cartTotal) cartTotal.textContent = `$${calculateTotal().toFixed(2)}`;
+            if (cartTotal) cartTotal.innerHTML = `<strong>Ksh ${calculateTotal().toFixed(2)}</strong>`;
         }
     }
 }
